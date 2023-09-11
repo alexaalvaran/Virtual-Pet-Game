@@ -269,7 +269,7 @@ public class PetAppGUI extends JPanel {
         
         statsPanel.add(hygieneLabel);
         statsPanel.add(hygieneStat);
-        
+      
         statsPanel.add(happinessLabel);
         statsPanel.add(happinessStat);
         
