@@ -25,7 +25,7 @@ public class PetAppGUI extends JPanel {
     int screenWidth = screenSize.width;
     int screenHeight = screenSize.height;
     int frameWidth = screenWidth;
-    int frameHeight = screenHeight/2;
+    int frameHeight = screenHeight / 2;
 
     //Welcome menu
     JFrame welcomeFrame;
@@ -63,21 +63,27 @@ public class PetAppGUI extends JPanel {
     JButton groom = new JButton("Groom");
     JButton sleep = new JButton("Sleep");
     JButton saveGame = new JButton("Quit and save game");
-    
+
     //Pet stats  - progress bars
     JPanel statsPanel;
-    JProgressBar hungerStat = new JProgressBar(0 ,100);
-    JProgressBar thirstStat = new JProgressBar(0,100);
+    JProgressBar hungerStat = new JProgressBar(0, 100);
+    JProgressBar thirstStat = new JProgressBar(0, 100);
     JProgressBar energyStat = new JProgressBar(0, 100);
     JProgressBar hygieneStat = new JProgressBar(0, 100);
-    JProgressBar happinessStat = new JProgressBar(0,100);
+    JProgressBar happinessStat = new JProgressBar(0, 100);
     JProgressBar friendshipStat = new JProgressBar(0, 100);
     JLabel hungerLabel = new JLabel("Hunger: ");
     JLabel thirstLabel = new JLabel("Thirst: ");
-        JLabel energyLabel = new JLabel("Energy: ");
-            JLabel hygieneLabel = new JLabel("Hygiene: ");
-                JLabel happinessLabel = new JLabel("Happiness: ");
-                    JLabel friendshipLabel = new JLabel("Friendship: ");
+    JLabel energyLabel = new JLabel("Energy: ");
+    JLabel hygieneLabel = new JLabel("Hygiene: ");
+    JLabel happinessLabel = new JLabel("Happiness: ");
+    JLabel friendshipLabel = new JLabel("Friendship: ");
+    int hungerValue = 30;
+    int thirstValue = 30;
+    int energyValue = 80;
+    int hygieneValue = 80;
+    int happinessValue = 5;
+    int friendshipValue = 0;
 
     public void petApp() {
 
@@ -216,15 +222,14 @@ public class PetAppGUI extends JPanel {
         newPetPanel.add(petPrompt);
         newPetPanel.add(inputPetName);
         newPetPanel.add(submitPetName);
-        
-        submitPetName.addActionListener(new ActionListener(){
-        @Override
-        public void actionPerformed(ActionEvent e)
-        {
-           adoptionFrame.dispose();
-           makeMainFrame();
-        }
-    });
+
+        submitPetName.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                adoptionFrame.dispose();
+                makeMainFrame();
+            }
+        });
     }
 
     public void makeMainFrame() {
@@ -241,11 +246,102 @@ public class PetAppGUI extends JPanel {
     public void mainFrame() {
         mainPanel = new JPanel();
         mainPanel.add(play);
+        play.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                happinessValue += 5;
+                hungerValue -= 5;
+                thirstValue -= 5;
+                energyValue -= 5;
+                friendshipValue += 2;
+                hygieneValue -= 2;
+
+                happinessStat.setValue(happinessValue);
+                hungerStat.setValue(hungerValue);
+                thirstStat.setValue(thirstValue);
+                energyStat.setValue(energyValue);
+                friendshipStat.setValue(friendshipValue);
+                hygieneStat.setValue(hygieneValue);
+
+            }
+        });
+
         mainPanel.add(walk);
+        walk.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                happinessValue += 5;
+                hungerValue -= 10;
+                thirstValue -= 10;
+                energyValue -= 10;
+                friendshipValue += 5;
+                hygieneValue -= 5;
+
+                happinessStat.setValue(happinessValue);
+                hungerStat.setValue(hungerValue);
+                thirstStat.setValue(thirstValue);
+                energyStat.setValue(energyValue);
+                friendshipStat.setValue(friendshipValue);
+                hygieneStat.setValue(hygieneValue);
+
+            }
+        });
+
         mainPanel.add(feed);
+        feed.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                happinessValue += 5;
+                hungerValue += 5;
+                thirstValue -= 2;
+                energyValue += 1;
+                friendshipValue += 2;
+                hygieneValue -= 2;
+
+                happinessStat.setValue(happinessValue);
+                hungerStat.setValue(hungerValue);
+                thirstStat.setValue(thirstValue);
+                energyStat.setValue(energyValue);
+                friendshipStat.setValue(friendshipValue);
+                hygieneStat.setValue(hygieneValue);
+
+            }
+        });
+
         mainPanel.add(water);
+        water.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                thirstValue += 10;
+                thirstStat.setValue(thirstValue);
+            }
+        });
+        
         mainPanel.add(groom);
+        groom.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                happinessValue += 5;
+                energyValue -= 5;
+                friendshipValue += 5;
+                hygieneValue += 20;
+
+                happinessStat.setValue(happinessValue);
+                energyStat.setValue(energyValue);
+                friendshipStat.setValue(friendshipValue);
+                hygieneStat.setValue(hygieneValue);
+
+            }
+        });
+        
         mainPanel.add(sleep);
+        sleep.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                energyValue += 30;
+                energyStat.setValue(energyValue);
+            }
+        });
         mainPanel.add(saveGame);
         saveGame.addActionListener(new ActionListener() {
             @Override
@@ -253,30 +349,35 @@ public class PetAppGUI extends JPanel {
                 System.exit(0);
             }
         });
-        
+
         mainPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
-        
+
         statsPanel = new JPanel();
-        
+
         statsPanel.add(hungerLabel);
         statsPanel.add(hungerStat);
-        
+        hungerStat.setValue(30);
+
         statsPanel.add(thirstLabel);
         statsPanel.add(thirstStat);
-        
+        thirstStat.setValue(30);
+
         statsPanel.add(energyLabel);
         statsPanel.add(energyStat);
-        
+        energyStat.setValue(80);
+
         statsPanel.add(hygieneLabel);
         statsPanel.add(hygieneStat);
-      
+        hygieneStat.setValue(80);
+
         statsPanel.add(happinessLabel);
         statsPanel.add(happinessStat);
-        
+        happinessStat.setValue(5);
+
         statsPanel.add(friendshipLabel);
         statsPanel.add(friendshipStat);
-        
+
         statsPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
-     
+
     }
 }
