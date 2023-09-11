@@ -8,7 +8,10 @@ package src;
  *
  * @author alei
  */
+import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -21,10 +24,10 @@ public class PetAppGUI extends JPanel {
     Dimension screenSize = kit.getScreenSize();
     int screenWidth = screenSize.width;
     int screenHeight = screenSize.height;
-    int frameWidth = screenWidth / 2;
-    int frameHeight = screenHeight / 2;
+    int frameWidth = screenWidth;
+    int frameHeight = screenHeight/2;
 
-    //Welcome menu button
+    //Welcome menu
     JFrame welcomeFrame;
     JPanel welcomePanel;
     JButton newGame = new JButton("Play new game");
@@ -32,12 +35,49 @@ public class PetAppGUI extends JPanel {
     JButton explainGame = new JButton("Explain the game");
     JButton quitGame = new JButton("Quit");
 
-    //Adoption menu buttons
+    //Get player name
+    JTextField inputPlayerName;
+    JPanel playerPanel;
+    JButton submitPlayerName;
+
+    //Adoption menu 
     JFrame adoptionFrame;
     JPanel adoptionPanel;
-    JButton newDog = new JButton("Dog");
-    JButton newCat = new JButton("Cat");
-    JButton newBird = new JButton("Bird");
+    ButtonGroup pets = new ButtonGroup();
+    JRadioButton newDog = new JRadioButton("Dog", true);
+    JRadioButton newCat = new JRadioButton("Cat");
+    JRadioButton newBird = new JRadioButton("Bird");
+
+    //Get animal name
+    JTextField inputPetName;
+    JPanel newPetPanel;
+    JButton submitPetName;
+
+    //Game menu
+    JFrame mainFrame;
+    JPanel mainPanel;
+    JButton play = new JButton("Play");
+    JButton walk = new JButton("Walk");
+    JButton feed = new JButton("Feed");
+    JButton water = new JButton("Water");
+    JButton groom = new JButton("Groom");
+    JButton sleep = new JButton("Sleep");
+    JButton saveGame = new JButton("Quit and save game");
+    
+    //Pet stats  - progress bars
+    JPanel statsPanel;
+    JProgressBar hungerStat = new JProgressBar(0 ,100);
+    JProgressBar thirstStat = new JProgressBar(0,100);
+    JProgressBar energyStat = new JProgressBar(0, 100);
+    JProgressBar hygieneStat = new JProgressBar(0, 100);
+    JProgressBar happinessStat = new JProgressBar(0,100);
+    JProgressBar friendshipStat = new JProgressBar(0, 100);
+    JLabel hungerLabel = new JLabel("Hunger: ");
+    JLabel thirstLabel = new JLabel("Thirst: ");
+        JLabel energyLabel = new JLabel("Energy: ");
+            JLabel hygieneLabel = new JLabel("Hygiene: ");
+                JLabel happinessLabel = new JLabel("Happiness: ");
+                    JLabel friendshipLabel = new JLabel("Friendship: ");
 
     public void petApp() {
 
@@ -46,6 +86,7 @@ public class PetAppGUI extends JPanel {
         this.welcomeMenu();
         welcomeFrame.add(welcomePanel);
         welcomeFrame.setVisible(true);
+        this.mainFrame();
 
     }
 
@@ -55,7 +96,7 @@ public class PetAppGUI extends JPanel {
         welcomeFrame.setSize(frameWidth, frameHeight);
         welcomeFrame.setResizable(false);
         welcomeFrame.setLocationRelativeTo(null);
-                welcomeFrame.setVisible(true);
+        welcomeFrame.setVisible(true);
     }
 
     public void welcomeMenu() {
@@ -82,12 +123,17 @@ public class PetAppGUI extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == newGame) {
+
                     welcomeFrame.dispose();
                     makeAdoptionFrame();
                     adoptionMenu();
+                    getPlayerName();
+                    getPetName();
+                    adoptionFrame.add(playerPanel);
                     adoptionFrame.add(adoptionPanel);
+                    adoptionFrame.add(newPetPanel);
+                    adoptionFrame.setLayout(new GridLayout(3, 1));
                     adoptionFrame.setVisible(true);
-
                 }
             }
         });
@@ -95,7 +141,12 @@ public class PetAppGUI extends JPanel {
         existingGame.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(null, "Starting existing game!", "Virtual Pet App", JOptionPane.INFORMATION_MESSAGE);
+                welcomeFrame.dispose();
+                makeAdoptionFrame();
+                getPlayerName();
+                adoptionFrame.add(playerPanel, BorderLayout.CENTER);
+                adoptionFrame.setVisible(true);
+
             }
         });
 
@@ -118,22 +169,32 @@ public class PetAppGUI extends JPanel {
 
     }
 
+    public void getPlayerName() {
+        playerPanel = new JPanel();
+        inputPlayerName = new JTextField(10);
+        submitPlayerName = new JButton("submit");
+
+        JLabel playerPrompt = new JLabel("Enter your name: ");
+        playerPanel.add(playerPrompt);
+        playerPanel.add(inputPlayerName);
+        playerPanel.add(submitPlayerName);
+    }
+
     public void adoptionMenu() {
         adoptionPanel = new JPanel();
-        
-        adoptionPanel.add(Box.createHorizontalGlue());
-        adoptionPanel.add(Box.createHorizontalStrut(frameWidth / 4));
-        adoptionPanel.add(Box.createVerticalGlue());
-        JLabel  adoptionPrompt = new JLabel("Pick a new animal to adopt: ", JLabel.CENTER);
+
+        //Adding buttons to button group (radio buttons)
+        pets.add(newDog);
+        pets.add(newCat);
+        pets.add(newBird);
+
+        JLabel adoptionPrompt = new JLabel("Pick an animal to adopt: ");
+
+        //Adding buttons to panel
         adoptionPanel.add(adoptionPrompt);
         adoptionPanel.add(newDog);
         adoptionPanel.add(newCat);
         adoptionPanel.add(newBird);
-        adoptionPanel.add(Box.createVerticalGlue());
-        adoptionPanel.add(Box.createHorizontalStrut(frameWidth / 4));
-        adoptionPanel.add(Box.createHorizontalGlue());
-        
-        adoptionPanel.setLayout(new BoxLayout(adoptionPanel, BoxLayout.Y_AXIS));
 
     }
 
@@ -146,4 +207,76 @@ public class PetAppGUI extends JPanel {
         adoptionFrame.setVisible(true);
     }
 
+    public void getPetName() {
+        newPetPanel = new JPanel();
+        inputPetName = new JTextField(10);
+        submitPetName = new JButton("submit");
+
+        JLabel petPrompt = new JLabel("Enter the name of your pet: ");
+        newPetPanel.add(petPrompt);
+        newPetPanel.add(inputPetName);
+        newPetPanel.add(submitPetName);
+        
+        submitPetName.addActionListener(new ActionListener(){
+        @Override
+        public void actionPerformed(ActionEvent e)
+        {
+           adoptionFrame.dispose();
+           makeMainFrame();
+        }
+    });
+    }
+
+    public void makeMainFrame() {
+        mainFrame = new JFrame("Virtual Pet Game");
+        mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        mainFrame.setSize(frameWidth, frameHeight);
+        mainFrame.setResizable(false);
+        mainFrame.setLocationRelativeTo(null);
+        mainFrame.add(mainPanel, BorderLayout.PAGE_START);
+        mainFrame.add(statsPanel, BorderLayout.PAGE_END);
+        mainFrame.setVisible(true);
+    }
+
+    public void mainFrame() {
+        mainPanel = new JPanel();
+        mainPanel.add(play);
+        mainPanel.add(walk);
+        mainPanel.add(feed);
+        mainPanel.add(water);
+        mainPanel.add(groom);
+        mainPanel.add(sleep);
+        mainPanel.add(saveGame);
+        saveGame.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
+            }
+        });
+        
+        mainPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+        
+        statsPanel = new JPanel();
+        
+        statsPanel.add(hungerLabel);
+        statsPanel.add(hungerStat);
+        
+        statsPanel.add(thirstLabel);
+        statsPanel.add(thirstStat);
+        
+        statsPanel.add(energyLabel);
+        statsPanel.add(energyStat);
+        
+        statsPanel.add(hygieneLabel);
+        statsPanel.add(hygieneStat);
+        
+        statsPanel.add(happinessLabel);
+        statsPanel.add(happinessStat);
+        
+        statsPanel.add(friendshipLabel);
+        statsPanel.add(friendshipStat);
+        
+        statsPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+     
+    }
 }
