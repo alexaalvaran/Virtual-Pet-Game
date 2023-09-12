@@ -54,7 +54,7 @@ public class AdoptionFrame {
         adoptionFrame.setSize(frameWidth, frameHeight);
         adoptionFrame.setResizable(false);
         adoptionFrame.setLocationRelativeTo(null);
-        
+       
         getPlayerName();
         adoptionFrame.add(playerPanel);
         
@@ -96,6 +96,7 @@ public class AdoptionFrame {
         adoptionPanel.add(newDog);
         adoptionPanel.add(newCat);
         adoptionPanel.add(newBird);
+       
 
     }
 
@@ -120,5 +121,47 @@ public class AdoptionFrame {
             }
         });
     }
+
+    public JFrame getAdoptionFrame() {
+        return adoptionFrame;
+    }
+
+    public void setAdoptionFrame(JFrame adoptionFrame) {
+        this.adoptionFrame = adoptionFrame;
+    }
+
+    public JPanel getPlayerPanel() {
+        return playerPanel;
+    }
+
+    public void setPlayerPanel(JPanel playerPanel) {
+        this.playerPanel = playerPanel;
+    }
+
+    public JPanel getAdoptionPanel() {
+        return adoptionPanel;
+    }
+
+    public void setAdoptionPanel(JPanel adoptionPanel) {
+        this.adoptionPanel = adoptionPanel;
+    }
+
+    public JPanel getNewPetPanel() {
+        return newPetPanel;
+    }
+
+    public void setNewPetPanel(JPanel newPetPanel) {
+        this.newPetPanel = newPetPanel;
+    }
+
+    public JButton getSubmitPlayerName() {
+        return submitPlayerName;
+    }
+
+    public void setSubmitPlayerName(JButton submitPlayerName) {
+        this.submitPlayerName = submitPlayerName;
+    }
+    
+    
 
 }
