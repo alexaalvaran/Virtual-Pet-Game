@@ -84,10 +84,17 @@ public class WelcomeFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 welcomeFrame.dispose();
-//                makeAdoptionFrame();
-//                getPlayerName();
-//                adoptionFrame.add(playerPanel, BorderLayout.CENTER);
-//                adoptionFrame.setVisible(true);
+                AdoptionFrame adoptionFrame = new AdoptionFrame();
+                adoptionFrame.getAdoptionFrame().remove(adoptionFrame.getAdoptionPanel());
+                adoptionFrame.getAdoptionFrame().remove(adoptionFrame.getNewPetPanel());
+                adoptionFrame.getSubmitPlayerName().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                adoptionFrame.getAdoptionFrame().dispose();
+                MainFrame mainFrame = new MainFrame();
+            }
+        });
+
 
             }
         });
