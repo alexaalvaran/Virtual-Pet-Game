@@ -60,16 +60,32 @@ public class MainFrame {
     private int happinessValue = 5;
     private int friendshipValue = 0;
 
-    public MainFrame() {
+    //Database Manager
+     GameDBManager dbManager = new GameDBManager();
+     
+     
+    //Get player and pet name
+    private AdoptionView adoptionView = new AdoptionView();
+    String playerName = "";
+    String petName = "";
+
+   
+    public MainFrame()
+    {
+        
+    }
+    public void setMainFrame() {
         mainFrame = new JFrame("Virtual Pet Game");
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainFrame.setSize(frameWidth, frameHeight);
         mainFrame.setResizable(false);
         mainFrame.setLocationRelativeTo(null);
         makeMainPanel();
+        petStats();
         mainFrame.add(mainPanel, BorderLayout.PAGE_START);
         mainFrame.add(statsPanel, BorderLayout.PAGE_END);
         mainFrame.setVisible(true);
+
     }
 
     //Components the main frame if composed of - the main panel and the stats panel
@@ -179,39 +195,91 @@ public class MainFrame {
         saveGame.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+           //     dbManager.saveGame(, petName, hungerValue, thirstValue, energyValue, hygieneValue, happinessValue, friendshipValue);
+                
                 System.exit(0);
             }
         });
 
         mainPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
 
+    }
+    
+    public void petStats()
+    {
         //Stats panel contains the progress bar (status bar) of the pet
         statsPanel = new JPanel();
 
         statsPanel.add(hungerLabel);
         statsPanel.add(hungerStat);
-        hungerStat.setValue(30);
+       
 
         statsPanel.add(thirstLabel);
         statsPanel.add(thirstStat);
-        thirstStat.setValue(30);
+        
+       
 
         statsPanel.add(energyLabel);
         statsPanel.add(energyStat);
-        energyStat.setValue(80);
+       
 
         statsPanel.add(hygieneLabel);
         statsPanel.add(hygieneStat);
-        hygieneStat.setValue(80);
+       
 
         statsPanel.add(happinessLabel);
         statsPanel.add(happinessStat);
-        happinessStat.setValue(5);
+       
 
         statsPanel.add(friendshipLabel);
         statsPanel.add(friendshipStat);
-
+        
+     if(dbManager.findExistingPlayer(playerName) == true)
+     {
+         hungerStat.setValue(dbManager.loadHunger(playerName, petName));
+         thirstStat.setValue(dbManager.loadThirst(playerName, petName));
+         energyStat.setValue(dbManager.loadEnergy(playerName, petName));
+         hygieneStat.setValue(dbManager.loadHygiene(playerName, petName));
+         happinessStat.setValue(dbManager.loadHappiness(playerName, petName));
+         friendshipStat.setValue(dbManager.loadFriendship(playerName, petName));
+     }
+     
+     else
+     {
+        
+        //If exisiting player doesnt exist - initial pet stats
+        hungerStat.setValue(30);
+          thirstStat.setValue(30);
+            energyStat.setValue(80);
+             hygieneStat.setValue(80);
+               happinessStat.setValue(5);
+     }      
+     
+     hungerStat.setStringPainted(true);
+     thirstStat.setStringPainted(true);
+     energyStat.setStringPainted(true);
+     hygieneStat.setStringPainted(true);
+     happinessStat.setStringPainted(true);
+     friendshipStat.setStringPainted(true);
+     
         statsPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
-
     }
+    
+     public String getPlayerName() {
+        return playerName;
+    }
+
+    public void setPlayerName(String playerName) {
+        this.playerName = playerName;
+    }
+
+    public String getPetName() {
+        return petName;
+    }
+
+    public void setPetName(String petName) {
+        this.petName = petName;
+    }
+    
 }
+
