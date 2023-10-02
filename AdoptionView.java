@@ -34,7 +34,7 @@ public class AdoptionView {
     private JTextField inputPlayerName = new JTextField(10);;
     private JPanel playerPanel = new JPanel();
     private JLabel playerPrompt = new JLabel("Enter your name: ");
-    private JButton submitPlayerName =   submitPlayerName = new JButton("submit");
+    private JButton submitPlayerName =   submitPlayerName = new JButton("Submit Player Name");
 
     //Adoption menu 
     private JFrame adoptionFrame = new JFrame("Virtual Pet Game");;
@@ -48,9 +48,13 @@ public class AdoptionView {
     //Get animal name
     private JTextField inputPetName  = new JTextField(10);;
     private JPanel newPetPanel =  new JPanel();
-    JLabel petPrompt = new JLabel("Enter the name of your pet: ");
-    private JButton submitPetName = new JButton("submit");
+    private JLabel petPrompt = new JLabel("Enter the name of your pet: ");
+    private JButton submitPetName = new JButton("Submit Pet Name");
 
+    //Return to main menu
+    private JButton returnMenu = new JButton("Return to menu");
+    private JPanel menuReturn = new JPanel();
+    
     //Adoption DB Manager
     GameDBManager dbManager = new GameDBManager();
 
@@ -69,8 +73,11 @@ public class AdoptionView {
 
         getPetName();
         adoptionFrame.add(newPetPanel);
-
-        adoptionFrame.setLayout(new GridLayout(3, 1));
+        
+       returntoMenu();
+        adoptionFrame.add(menuReturn);
+        
+        adoptionFrame.setLayout(new GridLayout(4, 1));
         adoptionFrame.setVisible(true);
     }
 
@@ -85,14 +92,19 @@ public class AdoptionView {
             @Override
             public void actionPerformed(ActionEvent e)
             {
+                
+        if(!inputPlayerName.getText().isEmpty())
+        {
             boolean found = dbManager.findExistingPlayer(inputPlayerName.getText());
             if(found == true)
              {
-            JOptionPane.showMessageDialog(null, "Existing player already exists", "VirtualPetApp", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Existing player already exists - continuing will overwrite existing game", "VirtualPetApp", JOptionPane.INFORMATION_MESSAGE);
             }
             dbManager.newPlayer(inputPlayerName.getText());
             }
+            }
         });
+        
 
     }
 
@@ -118,16 +130,36 @@ public class AdoptionView {
         newPetPanel.add(petPrompt);
         newPetPanel.add(inputPetName);
         newPetPanel.add(submitPetName);
-
+        
+        
         //When submit button is pressed, we go to the main playing game frame 
         submitPetName.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+             
                 dbManager.newPet(inputPetName.getText());
+                if(!inputPetName.getText().isEmpty())
+        {
                 adoptionFrame.dispose();
                 MainFrame mainFrame = new MainFrame();
+        }
             }
         });
+        
+    }
+    
+    public void returntoMenu()
+    {
+     
+        returnMenu.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e){
+                adoptionFrame.dispose();
+                WelcomeFrame welcomeFrame = new WelcomeFrame();
+            }
+        });
+        
+           menuReturn.add(returnMenu);
     }
 
     public JFrame getAdoptionFrame() {
