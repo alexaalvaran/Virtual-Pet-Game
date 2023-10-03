@@ -88,6 +88,7 @@ public class WelcomeFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 welcomeFrame.dispose();
+
                 AdoptionView adoptionFrame = new AdoptionView();
                 adoptionFrame.adoptionViewFrame();
                 adoptionFrame.getAdoptionFrame().remove(adoptionFrame.getAdoptionPanel());
@@ -102,6 +103,7 @@ public class WelcomeFrame {
                         mainFrame.setMainFrame();
                     }
                 });
+
 
             }
         });
