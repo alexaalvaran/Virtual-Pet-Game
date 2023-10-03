@@ -30,11 +30,19 @@ public class AdoptionView {
     private int screenHeight = screenSize.height;
     private int frameWidth = screenWidth;
     private int frameHeight = screenHeight / 2;
+
+    
+    //Adoption DB Manager
+    GameDBManager dbManager = new GameDBManager();
+    
+
     //Get player name
     private JTextField inputPlayerName = new JTextField(10);;
     private JPanel playerPanel = new JPanel();
     private JLabel playerPrompt = new JLabel("Enter your name: ");
-    private JButton submitPlayerName =   submitPlayerName = new JButton("submit");
+
+    private JButton submitPlayerName =   submitPlayerName = new JButton("Submit Player Name");
+
 
     //Adoption menu 
     private JFrame adoptionFrame = new JFrame("Virtual Pet Game");;
@@ -48,34 +56,51 @@ public class AdoptionView {
     //Get animal name
     private JTextField inputPetName  = new JTextField(10);;
     private JPanel newPetPanel =  new JPanel();
-    JLabel petPrompt = new JLabel("Enter the name of your pet: ");
-    private JButton submitPetName = new JButton("submit");
 
-    //Adoption DB Manager
-    GameDBManager dbManager = new GameDBManager();
+    private JLabel petPrompt = new JLabel("Enter the name of your pet: ");
+    private JButton submitPetName = new JButton("Submit Pet Name");
 
+    //Return to main menu
+    private JButton returnMenu = new JButton("Return to menu");
+    private JPanel menuReturn = new JPanel();
+    
+    public AdoptionView()
+    {
+        
+    }
     //Making the adoption frame
-    public AdoptionView() {
+    public void adoptionViewFrame() {
+
         adoptionFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         adoptionFrame.setSize(frameWidth, frameHeight);
         adoptionFrame.setResizable(false);
         adoptionFrame.setLocationRelativeTo(null);
 
-        getPlayerName();
+
+        inputPlayerName();
         adoptionFrame.add(playerPanel);
+        
+
 
         adoptionMenu();
         adoptionFrame.add(adoptionPanel);
 
-        getPetName();
-        adoptionFrame.add(newPetPanel);
 
-        adoptionFrame.setLayout(new GridLayout(3, 1));
+        inputPetName();
+        adoptionFrame.add(newPetPanel);
+        
+       returntoMenu();
+        adoptionFrame.add(menuReturn);
+        
+        adoptionFrame.setLayout(new GridLayout(4, 1));
+
         adoptionFrame.setVisible(true);
     }
 
 //Creating the panel which stores textfield to retrieve player name and button to submit
-    public void getPlayerName() {
+
+    public void inputPlayerName() {
+
         playerPanel.add(playerPrompt);
         playerPanel.add(inputPlayerName);
         playerPanel.add(submitPlayerName);
@@ -85,14 +110,20 @@ public class AdoptionView {
             @Override
             public void actionPerformed(ActionEvent e)
             {
-            boolean found = dbManager.findExistingPlayer(inputPlayerName.getText());
-            if(found == true)
+                
+              boolean existingPlayer = dbManager.findExistingPlayer(inputPlayerName.getText());   
+        if(!inputPlayerName.getText().isEmpty())
+        {
+            if(existingPlayer == true)
              {
-            JOptionPane.showMessageDialog(null, "Existing player already exists", "VirtualPetApp", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Existing player already exists - continuing will overwrite existing game", "VirtualPetApp", JOptionPane.INFORMATION_MESSAGE);
+            
             }
-            dbManager.newPlayer(inputPlayerName.getText());
+           
+            }
             }
         });
+       
 
     }
 
@@ -113,7 +144,8 @@ public class AdoptionView {
     }
 
     //Creating the panel that has textfield which retrieves the name of the pet and submit button
-    public void getPetName() {
+    public void inputPetName() {
+
       
         newPetPanel.add(petPrompt);
         newPetPanel.add(inputPetName);
@@ -123,11 +155,38 @@ public class AdoptionView {
         submitPetName.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                dbManager.newPet(inputPetName.getText());
+
+             
+               
+                if(!inputPetName.getText().isEmpty())
+        {
                 adoptionFrame.dispose();
                 MainFrame mainFrame = new MainFrame();
+                mainFrame.setPlayerName(getPlayerName());
+                mainFrame.setPetName(getPetName());
+                mainFrame.petStats();
+                mainFrame.setMainFrame();
+                    
+        }
             }
         });
+        
+    }
+    
+    public void returntoMenu()
+    {
+     
+        returnMenu.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e){
+                adoptionFrame.dispose();
+                WelcomeFrame welcomeFrame = new WelcomeFrame();
+              
+            }
+        });
+        
+           menuReturn.add(returnMenu);
+
     }
 
     public JFrame getAdoptionFrame() {
@@ -169,5 +228,26 @@ public class AdoptionView {
     public void setSubmitPlayerName(JButton submitPlayerName) {
         this.submitPlayerName = submitPlayerName;
     }
+   
+    public String getPlayerName()
+    {
+        return this.inputPlayerName.getText();
+    }
+    
+    public String getPetName()
+    {
+        return this.inputPetName.getText();
+    }
+    
+    public void setPlayerName(String playerName)
+    {
+        this.inputPetName.setText(playerName);
+    }
+    
+    public void setPetName(String petName)
+    {
+        this.inputPetName.setText(petName);
+    }
+    
 
 }

@@ -34,7 +34,9 @@ public class WelcomeFrame {
     private JButton existingGame = new JButton("Play existing game");
     private JButton explainGame = new JButton("Explain the game");
     private JButton quitGame = new JButton("Quit");
-
+   
+   GameDBManager db = new GameDBManager();
+   
     public WelcomeFrame() {
         welcomeFrame = new JFrame("Virtual Pet App");
         welcomeFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -69,13 +71,15 @@ public class WelcomeFrame {
         welcomePanel.add(Box.createHorizontalGlue());
 
         welcomePanel.setLayout(new BoxLayout(welcomePanel, BoxLayout.Y_AXIS));
-
+        
+ 
         newGame.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == newGame) {
                     welcomeFrame.dispose();
-                    AdoptionFrame adoptionFrame = new AdoptionFrame();
+                    AdoptionView adoptionFrame = new AdoptionView();
+                    adoptionFrame.adoptionViewFrame();
                 }
             }
         });
@@ -84,16 +88,21 @@ public class WelcomeFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 welcomeFrame.dispose();
-                AdoptionFrame adoptionFrame = new AdoptionFrame();
+
+                AdoptionView adoptionFrame = new AdoptionView();
+                adoptionFrame.adoptionViewFrame();
                 adoptionFrame.getAdoptionFrame().remove(adoptionFrame.getAdoptionPanel());
                 adoptionFrame.getAdoptionFrame().remove(adoptionFrame.getNewPetPanel());
                 adoptionFrame.getSubmitPlayerName().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                adoptionFrame.getAdoptionFrame().dispose();
-                MainFrame mainFrame = new MainFrame();
-            }
-        });
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        adoptionFrame.getAdoptionFrame().dispose();
+                        MainFrame mainFrame = new MainFrame();
+                        mainFrame.setPlayerName(adoptionFrame.getPlayerName());
+                        mainFrame.setPetName(db.getExistingPetName(adoptionFrame.getPlayerName()));
+                        mainFrame.setMainFrame();
+                    }
+                });
 
 
             }
@@ -116,6 +125,11 @@ public class WelcomeFrame {
             }
         });
 
+    }
+    
+    public void dispose()
+    {
+        welcomeFrame.dispose();
     }
 
 }
