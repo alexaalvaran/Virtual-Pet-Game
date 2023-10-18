@@ -17,8 +17,14 @@ public class VirtualPetApplication extends JPanel
     
     public static void main(String[] args) 
     {
-        PetAppGUI gui = new PetAppGUI();
-gui.petApp();
+
+         PGCreateDBTables dbTable = new PGCreateDBTables();
+          dbTable.createSavedGamesTable();
+    
+         GameModel game = new GameModel();
+         game.welcomeFrame();
+         
+         dbTable.closeConnections();
     }
  
 }
