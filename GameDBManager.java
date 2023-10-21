@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package src;
+package gui;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -49,9 +49,26 @@ public class GameDBManager {
         return found;
     }
 
+    public boolean findExistingPet(String petName) {
+        boolean found = false;
+
+        try {
+            ResultSet rs = statement.executeQuery("SELECT PET_NAME FROM SAVEDGAMES WHERE PET_NAME ='" + petName + "'");
+            if (rs.next()) {
+                System.out.println("Existing pet");
+                found = true;
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+
+        return found;
+    }
+
     public void newPlayer(String playerName) {
         try {
             statement.executeUpdate("INSERT INTO SAVEDGAMES (PLAYER_NAME) VALUES(" + playerName + ")");
+            System.out.println("new player added");
 
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
@@ -72,17 +89,17 @@ public class GameDBManager {
             int energy, int hygiene, int happiness, int friendship) {
         try {
             statement.executeUpdate("UPDATE SAVEDGAMES SET hunger = " + hunger + ", thirst = " + thirst + ", energy = " + energy + ", hygiene = " + hygiene + ", happiness = " + happiness + ", friendship = " + friendship + " WHERE PLAYER_NAME = '" + playerName + "' AND PET_NAME = '" + petName + "'");
+            System.out.println("Game saved! See you soon :)");
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
     }
-    
-   
+
     //Loading saved stats from existing game
-    public int loadHunger(String playerName, String petName) {
+    public int loadHunger(String playerName) {
         int hunger = 0;
         try {
-            ResultSet rs = statement.executeQuery("SELECT HUNGER FROM SAVEDGAMES WHERE PLAYER_NAME = '" + playerName + "' AND PET_NAME = '" + petName + "'");
+            ResultSet rs = statement.executeQuery("SELECT HUNGER FROM SAVEDGAMES WHERE PLAYER_NAME = '" + playerName + "'");
 
             if (rs.next()) {
                 hunger = rs.getInt(1);
@@ -94,10 +111,10 @@ public class GameDBManager {
         return hunger;
     }
 
-    public int loadThirst(String playerName, String petName) {
+    public int loadThirst(String playerName) {
         int thirst = 0;
         try {
-            ResultSet rs = statement.executeQuery("SELECT THIRST FROM SAVEDGAMES WHERE PLAYER_NAME = '" + playerName + "' AND PET_NAME = '" + petName + "'");
+            ResultSet rs = statement.executeQuery("SELECT THIRST FROM SAVEDGAMES WHERE PLAYER_NAME = '" + playerName + "'");
 
             if (rs.next()) {
                 thirst = rs.getInt(1);
@@ -109,10 +126,10 @@ public class GameDBManager {
         return thirst;
     }
 
-    public int loadEnergy(String playerName, String petName) {
+    public int loadEnergy(String playerName) {
         int energy = 0;
         try {
-            ResultSet rs = statement.executeQuery("SELECT ENERGY FROM SAVEDGAMES WHERE PLAYER_NAME = '" + playerName + "' AND PET_NAME = '" + petName + "' ");
+            ResultSet rs = statement.executeQuery("SELECT ENERGY FROM SAVEDGAMES WHERE PLAYER_NAME = '" + playerName + "'");
 
             if (rs.next()) {
                 energy = rs.getInt(1);
@@ -124,10 +141,10 @@ public class GameDBManager {
         return energy;
     }
 
-    public int loadHygiene(String playerName, String petName) {
+    public int loadHygiene(String playerName) {
         int hygiene = 0;
         try {
-            ResultSet rs = statement.executeQuery("SELECT HYGIENE FROM SAVEDGAMES WHERE PLAYER_NAME = '" + playerName + "' AND PET_NAME = '" + petName + "' ");
+            ResultSet rs = statement.executeQuery("SELECT HYGIENE FROM SAVEDGAMES WHERE PLAYER_NAME = '" + playerName + "'");
 
             if (rs.next()) {
                 hygiene = rs.getInt(1);
@@ -139,10 +156,10 @@ public class GameDBManager {
         return hygiene;
     }
 
-    public int loadHappiness(String playerName, String petName) {
+    public int loadHappiness(String playerName) {
         int happiness = 0;
         try {
-            ResultSet rs = statement.executeQuery("SELECT HAPPINESS FROM SAVEDGAMES WHERE PLAYER_NAME = '" + playerName + "' AND PET_NAME = '" + petName + "' ");
+            ResultSet rs = statement.executeQuery("SELECT HAPPINESS FROM SAVEDGAMES WHERE PLAYER_NAME = '" + playerName + "'");
 
             if (rs.next()) {
                 happiness = rs.getInt(1);
@@ -154,10 +171,10 @@ public class GameDBManager {
         return happiness;
     }
 
-    public int loadFriendship(String playerName, String petName) {
+    public int loadFriendship(String playerName) {
         int friendship = 0;
         try {
-            ResultSet rs = statement.executeQuery("SELECT FRIENDSHIP FROM SAVEDGAMES WHERE PLAYER_NAME = '" + playerName + "' AND PET_NAME = '" + petName + "' ");
+            ResultSet rs = statement.executeQuery("SELECT FRIENDSHIP FROM SAVEDGAMES WHERE PLAYER_NAME = '" + playerName + "'");
 
             if (rs.next()) {
                 friendship = rs.getInt(1);
@@ -168,33 +185,26 @@ public class GameDBManager {
 
         return friendship;
     }
-    
-    public String getExistingPetName(String playerName)
-    {
+
+    public String getExistingPetName(String playerName) {
         String petName = "";
-        try
-        {
+        try {
             ResultSet rs = statement.executeQuery("SELECT PET_NAME FROM SAVEDGAMES WHERE PLAYER_NAME = '" + playerName + "'");
-            
-            if(rs.next())
-            {
+
+            if (rs.next()) {
                 petName = rs.getString(1);
             }
-            
-         
-        }catch(SQLException ex)
-        {
+
+        } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
-        
+
         return petName;
-        
+
     }
 
     public void closeConnections() {
         this.dbManager.closeConnections();
     }
-    
-    
 
 }
