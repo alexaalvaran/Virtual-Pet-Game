@@ -1,0 +1,57 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package petgame;
+
+/**
+ *
+ * @author achiu
+ */
+
+import org.junit.Test;
+import static org.junit.Assert.*;
+
+public class UnitTest {
+    
+    @Test
+    public void testPetCreation(){
+        Pet pet = new Pet("Jojo");
+        assertEquals("Jojo",pet.getName());
+        assertEquals(0,pet.getHungerValue());
+        assertEquals(100, pet.getHappiness());
+    }
+                
+    @Test
+    public void testFeedPet(){
+        Pet pet = new Pet ("Jojo");
+        pet.increaseHunger(30);
+        return hungerStat();
+        assertEquals(40, pet.getHunger());
+    }
+    
+    @Test
+    public void testPetFriendshi[() {
+        Pet pet = new Pet("Jojo");
+        pet.decreaseHappiness(50);
+        return happinessStat();
+        assertEquals(70, pet.getHappiness());
+    }
+
+    @Test
+    public void testIncreaseHunger() {
+        Pet pet = new Pet("Jojo");
+        pet.increaseHunger(30);
+        return hungerStat();
+        assertEquals(30, pet.getHunger());
+    }
+
+    @Test
+    public void testDecreaseHappiness() {
+        Pet pet = new Pet("Jojo");
+        pet.decreaseHappiness(20);
+        return hungerStat();
+        assertEquals(80, pet.getHappiness());
+    }
+       
+}
