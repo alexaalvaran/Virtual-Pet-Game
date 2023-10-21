@@ -12,14 +12,14 @@ import javax.swing.JOptionPane;
  *
  * @author alei
  */
-public class WelcomeController implements ActionListener
-{
+public class WelcomeController implements ActionListener {
+    
     private WelcomeView welcomeView;
     private GameModel gameModel = new GameModel();
     
-    public WelcomeController(WelcomeView welcomeView)
-    {
+    public WelcomeController(WelcomeView welcomeView, GameModel gameModel) {
         this.welcomeView = welcomeView;
+        this.gameModel = gameModel;
         
         welcomeView.addNewGameListener(this);
         welcomeView.addExistingGameListener(this);
@@ -27,41 +27,40 @@ public class WelcomeController implements ActionListener
         welcomeView.addQuitGameListener(this);
     }
     
-    @Override 
-    public void actionPerformed(ActionEvent e)
-    {
+    @Override
+    public void actionPerformed(ActionEvent e) {
         String command = e.getActionCommand();
         AdoptionView adoptionView;
         
-        switch(command)
-        {
+        switch (command) {
             case "Play new game":
-           
-            welcomeView.dispose();
-             gameModel.adoptionFrame();
-           
-
-                 break;
+                
+                welcomeView.dispose();
+                gameModel.adoptionFrame();
+                
+                break;
             
             case "Play existing game":
+                welcomeView.setExistingGame(true);
                 welcomeView.dispose();
                 gameModel.adoptionFrame();
                 gameModel.getAdoptionView().getAdoptionFrame().remove(gameModel.getAdoptionView().getAdoptionPanel());
-                 gameModel.getAdoptionView().getAdoptionFrame().remove(gameModel.getAdoptionView().getNewPetPanel());
-                break;
+                gameModel.getAdoptionView().getAdoptionFrame().remove(gameModel.getAdoptionView().getNewPetPanel());
                 
+                break;
+            
             case "Explain the game":
                 JOptionPane.showMessageDialog(null, "This is a virtual pet game where you can adopt different dogs, cats, or birds and take care of them. \n"
                         + "You can feed, play with, bathe, groom, and walk with your pet which increases your friendship level.\n"
                         + "Make sure to keep taking care of your pet to keep their levels up and your friendship level high!\n "
                         + "Have fun :)", "Virtual Pet App", JOptionPane.INFORMATION_MESSAGE);
                 break;
-                
+            
             case "Quit":
-                 System.exit(0);
-                 break;
-                 
+                System.exit(0);
+                break;
+            
         }
     }
- 
+    
 }
