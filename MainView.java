@@ -7,20 +7,25 @@ package gui;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.ImageObserver;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
+
 /**
  *
  * @author alei
  */
-public class MainView 
-{
+public class MainView {
+
     Toolkit kit = Toolkit.getDefaultToolkit();
     Dimension screenSize = kit.getScreenSize();
     private int screenWidth = screenSize.width;
@@ -28,7 +33,8 @@ public class MainView
     private int frameWidth = screenWidth;
     private int frameHeight = screenHeight / 2;
 
-    private JFrame mainFrame =  new JFrame("Virtual Pet Game");;
+    private JFrame mainFrame = new JFrame("Virtual Pet Game");
+    ;
     private JPanel mainPanel;
     private JButton play = new JButton("Play");
     private JButton walk = new JButton("Walk");
@@ -37,6 +43,7 @@ public class MainView
     private JButton groom = new JButton("Groom");
     private JButton sleep = new JButton("Sleep");
     private JButton saveGame = new JButton("Quit and save game");
+    private JButton returntoMenu = new JButton("Return to menu");
 
     //Pet stats 
     private JPanel statsPanel;
@@ -47,88 +54,75 @@ public class MainView
     private JLabel hygieneLabel = new JLabel("Hygiene: ");
     private JLabel happinessLabel = new JLabel("Happiness: ");
     private JLabel friendshipLabel = new JLabel("Friendship: ");
-    
-    public void MainView()
-    {
-       
+
+    public void MainView() {
+
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainFrame.setSize(frameWidth, frameHeight);
         mainFrame.setResizable(false);
-     
+
     }
-    
-    public void petStats()
-    {
-       statsPanel = new JPanel();
+
+    public void petStats() {
+        statsPanel = new JPanel();
 
         statsPanel.add(hungerLabel);
         statsPanel.add(stats.getHungerStat());
 
-       
-
         statsPanel.add(thirstLabel);
         statsPanel.add(stats.getThirstStat());
-        
-       
 
         statsPanel.add(energyLabel);
         statsPanel.add(stats.getEnergyStat());
-       
 
         statsPanel.add(hygieneLabel);
         statsPanel.add(stats.getHygieneStat());
-       
 
         statsPanel.add(happinessLabel);
         statsPanel.add(stats.getHappinessStat());
-       
 
         statsPanel.add(friendshipLabel);
         statsPanel.add(stats.getFriendshipStat());
-        
+
         statsPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
     }
-    
+
     //Addinng button action listeners
-    public void addPlayListener(ActionListener listener)
-    {
+    public void addPlayListener(ActionListener listener) {
         play.addActionListener(listener);
     }
-    
-    public void addWalkListener(ActionListener listener)
-    {
+
+    public void addWalkListener(ActionListener listener) {
         walk.addActionListener(listener);
     }
-    
-    public void addFeedListener(ActionListener listener)
-    {
+
+    public void addFeedListener(ActionListener listener) {
         feed.addActionListener(listener);
     }
-    
-    public void addWaterListener(ActionListener listener)
-    {
+
+    public void addWaterListener(ActionListener listener) {
         water.addActionListener(listener);
     }
-    
-    public void addGroomListener(ActionListener listener)
-    {
+
+    public void addGroomListener(ActionListener listener) {
         groom.addActionListener(listener);
     }
-    
-    public void addSleepListener(ActionListener listener)
-    {
+
+    public void addSleepListener(ActionListener listener) {
         sleep.addActionListener(listener);
     }
-    
-    public void addSaveGameListener(ActionListener listener)
-    {
+
+    public void addSaveGameListener(ActionListener listener) {
         saveGame.addActionListener(listener);
-    }  
-    
-    public void display()
-    {
-         mainFrame.setSize(frameWidth, frameHeight);
-         mainFrame.setLocationRelativeTo(null);
+    }
+
+    public void addReturnToMenuListener(ActionListener listener) {
+        returntoMenu.addActionListener(listener);
+    }
+
+    public void display() {
+        mainFrame.setSize(frameWidth, frameHeight);
+        mainFrame.setLocationRelativeTo(null);
         mainPanel = new JPanel();
         mainPanel.add(play);
         mainPanel.add(walk);
@@ -137,20 +131,29 @@ public class MainView
         mainPanel.add(groom);
         mainPanel.add(sleep);
         mainPanel.add(saveGame);
-        
+        mainPanel.add(returntoMenu);
+
         petStats();
         mainPanel.add(statsPanel);
-        
-       mainFrame.add(mainPanel, BorderLayout.PAGE_START);
-        mainFrame.add(statsPanel, BorderLayout.PAGE_END);
-        
-              
+
         mainFrame.add(mainPanel);
+
+        mainFrame.add(mainPanel, BorderLayout.PAGE_START);
+        mainFrame.add(statsPanel, BorderLayout.SOUTH);
+
         mainFrame.setVisible(true);
     }
-    
-    public PetStats getPetStats()
-    {
+
+    public PetStats getPetStats() {
         return this.stats;
     }
+
+    public JFrame getMainFrame() {
+        return this.mainFrame;
+    }
+
+    public void dispose() {
+        mainFrame.dispose();
+    }
+
 }
