@@ -8,58 +8,50 @@ package gui;
  *
  * @author alei
  */
-public class AdoptionModel
-{
-    
+public class AdoptionModel {
+
     private GameDBManager dbManager = new GameDBManager();
-    private AdoptionView view; 
+    private AdoptionView view;
     private Player player;
     private Pet pet;
 
-    
-    public AdoptionModel(AdoptionView view)
-    {
+    public AdoptionModel(AdoptionView view) {
         this.view = view;
-       
+
     }
-    
-    public boolean existingPlayer()
-    {
+
+    public boolean existingPlayer() {
         return dbManager.findExistingPlayer(view.getPlayerName());
     }
-    
-    public boolean checkNullPlayerName()
-    {
+
+    public boolean checkNullPlayerName() {
         return view.getPlayerName().isEmpty();
     }
-    
-    public void newPlayer()
-    {
+
+    public void newPlayer() {
         player = new Player(view.getPlayerName());
         dbManager.newPlayer(view.getPlayerName());
     }
-    
-    public boolean checkNullPetName()
-    {
+
+    public boolean checkNullPetName() {
         return view.getPetName().isEmpty();
     }
-    
-    public void newPet()
-    {
-        pet = new Pet(view.getPlayerName());
+
+    public void newPet() {
+        pet = new Pet(view.getPlayerName(), view.getPetType());
         dbManager.newPet(view.getPetName());
     }
-    
-    public String getPlayerName()
-    {
+
+    public String getPlayerName() {
         return view.getPlayerName();
     }
-    
-    public String getPetName()
-    {
+
+    public String getPetName() {
         return view.getPetName();
     }
-    
- 
-    
+
+    public String getPetType() {
+        return view.getPetType();
+    }
+
 }
