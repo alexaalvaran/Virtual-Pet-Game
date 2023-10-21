@@ -19,11 +19,10 @@ import javax.swing.JPanel;
  *
  * @author alei
  */
-public class WelcomeView 
-{
-    
-    Toolkit kit = Toolkit.getDefaultToolkit();
-    Dimension screenSize = kit.getScreenSize();
+public class WelcomeView {
+
+    private Toolkit kit = Toolkit.getDefaultToolkit();
+    private Dimension screenSize = kit.getScreenSize();
     private int screenWidth = screenSize.width;
     private int screenHeight = screenSize.height;
     private int frameWidth = screenWidth;
@@ -35,9 +34,11 @@ public class WelcomeView
     private JButton existingGame = new JButton("Play existing game");
     private JButton explainGame = new JButton("Explain the game");
     private JButton quitGame = new JButton("Quit");
-   
-   GameDBManager db = new GameDBManager();
-   
+
+    private boolean selectedExisting = false;
+
+    GameDBManager db = new GameDBManager();
+
     public WelcomeView() {
         welcomeFrame = new JFrame("Virtual Pet App");
         welcomeFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -46,7 +47,7 @@ public class WelcomeView
         welcomeFrame.setLocationRelativeTo(null);
 
     }
-    
+
     public void welcomeMenu() {
 
         welcomePanel = new JPanel();
@@ -67,37 +68,39 @@ public class WelcomeView
 
         welcomePanel.setLayout(new BoxLayout(welcomePanel, BoxLayout.Y_AXIS));
     }
-    
-    public void addNewGameListener(ActionListener listener)
-    {
+
+    public void addNewGameListener(ActionListener listener) {
         newGame.addActionListener(listener);
     }
-    
-    public void addExistingGameListener(ActionListener listener)
-    {
+
+    public void addExistingGameListener(ActionListener listener) {
         existingGame.addActionListener(listener);
     }
-    
-    public void addExplainGameListener(ActionListener listener)
-    {
+
+    public void addExplainGameListener(ActionListener listener) {
         explainGame.addActionListener(listener);
     }
-    
-    public void addQuitGameListener(ActionListener listener)
-    {
+
+    public void addQuitGameListener(ActionListener listener) {
         quitGame.addActionListener(listener);
     }
-    
-     public void display() {
+
+    public void display() {
         welcomeMenu();
         welcomeFrame.add(welcomePanel);
 
-        welcomeFrame.setVisible(true); 
+        welcomeFrame.setVisible(true);
     }
-     
-     
-    public void dispose()
-    {
+
+    public void dispose() {
         welcomeFrame.dispose();
+    }
+
+    public void setExistingGame(boolean value) {
+        selectedExisting = value;
+    }
+
+    public boolean getExistingGame() {
+        return selectedExisting;
     }
 }
