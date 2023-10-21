@@ -4,7 +4,6 @@
  */
 package gui;
 
-
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
@@ -18,26 +17,25 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
-import src.Player;
 
 /**
  *
  * @author alei
  */
-public class AdoptionView 
-{
-    Toolkit kit = Toolkit.getDefaultToolkit();
-    Dimension screenSize = kit.getScreenSize();
+public class AdoptionView {
+
+    private Toolkit kit = Toolkit.getDefaultToolkit();
+    private Dimension screenSize = kit.getScreenSize();
     private int screenWidth = screenSize.width;
     private int screenHeight = screenSize.height;
     private int frameWidth = screenWidth;
     private int frameHeight = screenHeight / 2;
-    
-    private JTextField inputPlayerName = new JTextField(10);;
+
+    private JTextField inputPlayerName = new JTextField(10);
+    ;
     private JPanel playerPanel = new JPanel();
-    private JLabel playerPrompt  =  new JLabel("Enter your name: ");
-    private JButton submitPlayerName =   submitPlayerName = new JButton("Submit Player Name");
-   
+    private JLabel playerPrompt = new JLabel("Enter your name: ");
+    private JButton submitPlayerName = submitPlayerName = new JButton("Submit Player Name");
 
     //Adoption menu 
     private JFrame adoptionFrame = new JFrame("Virtual Pet Game");
@@ -49,7 +47,8 @@ public class AdoptionView
     private JRadioButton newBird = new JRadioButton("Bird");
 
     //Get animal name
-    private JTextField inputPetName  = new JTextField(10);;
+    private JTextField inputPetName = new JTextField(10);
+    ;
     private JPanel newPetPanel = new JPanel();
     private JLabel petPrompt = new JLabel("Enter the name of your pet: ");
     private JButton submitPetName = new JButton("Submit Pet Name");
@@ -57,31 +56,26 @@ public class AdoptionView
     //Return to main menu
     private JButton returnMenu = new JButton("Return to menu");
     private JPanel menuReturn = new JPanel();
-    
-     public void AdoptionView() {
-     
-    adoptionFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    adoptionFrame.setSize(frameWidth, frameHeight);
-    adoptionFrame.setResizable(false);
-    
 
+    public void AdoptionView() {
+        adoptionFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        adoptionFrame.setSize(frameWidth, frameHeight);
+        adoptionFrame.setResizable(false);
     }
-     
-     public void inputPlayerName() 
-     {
-      
+
+    public void inputPlayerName() {
+
         playerPanel.add(playerPrompt);
         playerPanel.add(inputPlayerName);
         playerPanel.add(submitPlayerName);
-     }
-     
-      public void adoptionMenu() {
-    
+    }
+
+    public void adoptionMenu() {
+
         //Adding buttons to button group (radio buttons)
         pets.add(newDog);
         pets.add(newCat);
         pets.add(newBird);
-       
 
         //Adding buttons to panel
         adoptionPanel.add(adoptionPrompt);
@@ -91,107 +85,94 @@ public class AdoptionView
         adoptionPanel.setVisible(true);
 
     }
-      
-      public void inputPetName() {
-      
+
+    public void inputPetName() {
+
         newPetPanel.add(petPrompt);
         newPetPanel.add(inputPetName);
         newPetPanel.add(submitPetName);
-      }
-     
-       public void returntoMenu()
-    {
+    }
+
+    public void returntoMenu() {
         menuReturn.add(returnMenu);
     }
-       
-     public void addSubmitPlayerNameListener(ActionListener listener)
-     {
-         submitPlayerName.addActionListener(listener);
-     }
-    
-     public void addSubmitPetNameListener(ActionListener listener)
-     {
-         submitPetName.addActionListener(listener);
-     }
-     
-     public void addReturnMenuListener(ActionListener listener)
-     {
-         returnMenu.addActionListener(listener);
-     }
-     
-     //Get the type of pet 
-      public String getPetType()
-    {
+
+    public void addSubmitPlayerNameListener(ActionListener listener) {
+        submitPlayerName.addActionListener(listener);
+    }
+
+    public void addSubmitPetNameListener(ActionListener listener) {
+        submitPetName.addActionListener(listener);
+    }
+
+    public void addReturnMenuListener(ActionListener listener) {
+        returnMenu.addActionListener(listener);
+    }
+
+    //Get the type of pet 
+    public String getPetType() {
+
         String petType = " ";
-        if(pets.getSelection() == newDog)
-        {
+
+        if (newDog.isSelected()) {
             petType = "Dog";
-        }
-        else if(pets.getSelection() == newCat)
-        {
+        } else if (newCat.isSelected()) {
             petType = "Cat";
-        }
-        else if(pets.getSelection() == newBird)
-        {
+        } else if (newBird.isSelected()) {
             petType = "Bird";
         }
-        
+
         return petType;
     }
-      
-       public JFrame getAdoptionFrame() {
+
+    public JFrame getAdoptionFrame() {
         return adoptionFrame;
     }
-       
-        public JPanel getPlayerPanel() {
+
+    public JPanel getPlayerPanel() {
         return playerPanel;
     }
-        
-        public JPanel getAdoptionPanel() {
+
+    public JPanel getAdoptionPanel() {
         return adoptionPanel;
     }
-        
-         public JPanel getNewPetPanel() {
+
+    public JPanel getNewPetPanel() {
         return newPetPanel;
     }
-         
-          public String getPlayerName()
-    {
+
+    public String getPlayerName() {
         return this.inputPlayerName.getText();
     }
-    
-    public String getPetName()
-    {
+
+    public String getPetName() {
         return this.inputPetName.getText();
     }
-    
-    public void display()
-    {
-        
-         adoptionFrame.setSize(frameWidth, frameHeight);
-            adoptionFrame.setLocationRelativeTo(null);
-         
-             inputPlayerName();
+
+    public void display() {
+
+        adoptionFrame.setSize(frameWidth, frameHeight);
+        adoptionFrame.setLocationRelativeTo(null);
+
+        inputPlayerName();
         adoptionFrame.add(playerPanel);
-        
+
         adoptionMenu();
         adoptionFrame.add(adoptionPanel);
 
         inputPetName();
         adoptionFrame.add(newPetPanel);
-        
-       returntoMenu();
+
+        returntoMenu();
         adoptionFrame.add(menuReturn);
-        
+
         adoptionFrame.setLayout(new GridLayout(4, 1));
-      
+
         adoptionFrame.setVisible(true);
     }
-    
-    public void dispose()
-    {
+
+    public void dispose() {
         adoptionFrame.dispose();
     }
-    
-}
 
+}
