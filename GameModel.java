@@ -8,49 +8,59 @@ package gui;
  *
  * @author alei
  */
-public class GameModel 
-{
-    
-     private AdoptionView adoptionView = new AdoptionView();
-    private AdoptionModel adoptionModel =  new AdoptionModel(adoptionView);
-    
-     private MainView mainView = new MainView();
-               
-    public void welcomeFrame()
-    {
-    WelcomeView welcomeView = new WelcomeView();
-    WelcomeController welcomeController = new WelcomeController(welcomeView);
-    welcomeView.display();
-    
-    }
-    
-    public void adoptionFrame()
-    {
+public class GameModel {
 
-     AdoptionController adoptionController = new AdoptionController(adoptionView, adoptionModel, this);
-     adoptionView.display(); 
+    private WelcomeView welcomeView = new WelcomeView();
+    private AdoptionView adoptionView = new AdoptionView();
+    private AdoptionModel adoptionModel = new AdoptionModel(adoptionView);
+
+    private MainView mainView = new MainView();
+
+    public void welcomeFrame() {
+
+        WelcomeController welcomeController = new WelcomeController(welcomeView, this);
+        welcomeView.display();
+
     }
-    
-    public void mainFrame()
-    {
-      
-       mainView.display();
-       
-       Player player = new Player(adoptionModel.getPlayerName());
-       Pet pet = new Pet(adoptionModel.getPetName());
-        
-       MainModel mainModel = new MainModel(player, pet, mainView.getPetStats());
-       
-       mainModel.loadExistingGame();
-       
-       MainController mainController = new MainController(mainView, mainModel);
-        
+
+    public void adoptionFrame() {
+
+        AdoptionController adoptionController = new AdoptionController(adoptionView, adoptionModel, this);
+        adoptionView.display();
     }
-    
-    public AdoptionView getAdoptionView()
-    {
+
+    public void mainFrame() {
+
+        Player player = new Player(adoptionModel.getPlayerName());
+        Pet pet = new Pet(adoptionModel.getPetName(), adoptionModel.getPetType());
+
+        MovingAnimal movingAnimal = new MovingAnimal("");
+
+        if (adoptionView.getPetType().equalsIgnoreCase("Dog")) {
+            movingAnimal = new MovingAnimal("/Users/alei/NetBeansProjects/ENSE600_Project1/dog.png");
+        } else if (adoptionView.getPetType().equalsIgnoreCase("Cat")) {
+            movingAnimal = new MovingAnimal("/Users/alei/NetBeansProjects/ENSE600_Project1/cat.png");
+        } else if (adoptionView.getPetType().equalsIgnoreCase("Bird")) {
+            movingAnimal = new MovingAnimal("/Users/alei/NetBeansProjects/ENSE600_Project1/bird.png");
+        }
+
+        mainView.display();
+        mainView.getMainFrame().add(movingAnimal);
+
+        MainModel mainModel = new MainModel(player, pet, mainView.getPetStats());
+
+        mainModel.loadExistingGame();
+
+        MainController mainController = new MainController(mainView, mainModel, this);
+
+    }
+
+    public AdoptionView getAdoptionView() {
         return this.adoptionView;
     }
-    
- 
+
+    public WelcomeView getWelcomeView() {
+        return this.welcomeView;
+    }
+
 }
