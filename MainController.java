@@ -3,23 +3,25 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package gui;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 /**
  *
  * @author alei
  */
-public class MainController implements ActionListener
-{
-    private MainView view;
-    private MainModel model;
+public class MainController implements ActionListener {
 
-    
-    public MainController(MainView view, MainModel model)
-    {
+    private MainView view;
+    private MainModel mainModel;
+    private GameModel gameModel = new GameModel();
+
+    public MainController(MainView view, MainModel mainModel, GameModel gameModel) {
         this.view = view;
-        this.model = model;
-        
+        this.mainModel = mainModel;
+        this.gameModel = gameModel;
+
         view.addFeedListener(this);
         view.addGroomListener(this);
         view.addPlayListener(this);
@@ -27,43 +29,49 @@ public class MainController implements ActionListener
         view.addWalkListener(this);
         view.addWaterListener(this);
         view.addSaveGameListener(this);
+        view.addReturnToMenuListener(this);
+
     }
-    
+
     @Override
-    public void actionPerformed(ActionEvent e)
-    {
+    public void actionPerformed(ActionEvent e) {
         String command = e.getActionCommand();
-        
-        switch(command)
-        {
+
+        switch (command) {
             case "Play":
-                model.play();
+                mainModel.play();
                 break;
-                
+
             case "Walk":
-                model.walk();
+                mainModel.walk();
                 break;
-              
+
             case "Feed":
-                model.feed();
+                mainModel.feed();
                 break;
-            
+
             case "Water":
-                model.water();
+                mainModel.water();
                 break;
-            
+
             case "Groom":
-                model.groom();
+                mainModel.groom();
                 break;
-            
+
             case "Sleep":
-                model.sleep();
+                mainModel.sleep();
                 break;
-                
+
             case "Quit and save game":
-                model.saveGame();
+                mainModel.saveGame();
                 System.exit(0);
                 break;
+
+            case "Return to menu":
+                view.dispose();
+                gameModel.welcomeFrame();
+                break;
+
         }
     }
 }
