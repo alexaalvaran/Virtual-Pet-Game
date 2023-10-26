@@ -8,8 +8,11 @@ package gui;
  *
  * @author alei
  */
+
+//The GameModel class handles the different frames of the petGame
 public class GameModel {
 
+    //Variables 
     private WelcomeView welcomeView = new WelcomeView();
     private AdoptionView adoptionView = new AdoptionView();
     private AdoptionModel adoptionModel = new AdoptionModel(adoptionView);
@@ -61,6 +64,10 @@ public class GameModel {
 
     public WelcomeView getWelcomeView() {
         return this.welcomeView;
+    }
+    
+    public AdoptionModel getAdoptionModel(){
+        return this.adoptionModel;
     }
 
 }
