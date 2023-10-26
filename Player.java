@@ -9,19 +9,21 @@ package gui;
  * @author alei
  */
 public class Player {
-    
+
+    //Variable
     private String playerName;
-    
-    public Player()
-    {
-        
+
+    //Default constructor
+    public Player() {
+
     }
-    
-    public Player(String playerName)
-    {
+
+    //Constructor
+    public Player(String playerName) {
         this.setPlayerName(playerName);
     }
 
+    //Get and set method for vairable
     public String getPlayerName() {
         return playerName;
     }
@@ -29,7 +31,5 @@ public class Player {
     public void setPlayerName(String playerName) {
         this.playerName = playerName;
     }
-    
-   
-    
+
 }

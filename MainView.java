@@ -19,23 +19,29 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
+import javax.swing.OverlayLayout;
 
 /**
  *
  * @author alei
  */
+
+//MainView class handles the main game frame with the pet and the game buttons and stats
 public class MainView {
 
-    Toolkit kit = Toolkit.getDefaultToolkit();
-    Dimension screenSize = kit.getScreenSize();
+    //Screen dimensions variable
+    private Toolkit kit = Toolkit.getDefaultToolkit();
+    private Dimension screenSize = kit.getScreenSize();
     private int screenWidth = screenSize.width;
     private int screenHeight = screenSize.height;
     private int frameWidth = screenWidth;
     private int frameHeight = screenHeight / 2;
 
+    //Main Game frame
     private JFrame mainFrame = new JFrame("Virtual Pet Game");
-    ;
-    private JPanel mainPanel;
+    
+    //Panel that stores all the different game buttons 
+    private JPanel buttonPanel;
     private JButton play = new JButton("Play");
     private JButton walk = new JButton("Walk");
     private JButton feed = new JButton("Feed");
@@ -43,6 +49,7 @@ public class MainView {
     private JButton groom = new JButton("Groom");
     private JButton sleep = new JButton("Sleep");
     private JButton saveGame = new JButton("Quit and save game");
+    private JButton resetGame = new JButton("Reset");
     private JButton returntoMenu = new JButton("Return to menu");
 
     //Pet stats 
@@ -55,6 +62,7 @@ public class MainView {
     private JLabel happinessLabel = new JLabel("Happiness: ");
     private JLabel friendshipLabel = new JLabel("Friendship: ");
 
+    //Default constructor 
     public void MainView() {
 
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -63,6 +71,7 @@ public class MainView {
 
     }
 
+    //Adds the petStats labels and the progress bars to the stats panel 
     public void petStats() {
         statsPanel = new JPanel();
 
@@ -115,35 +124,51 @@ public class MainView {
     public void addSaveGameListener(ActionListener listener) {
         saveGame.addActionListener(listener);
     }
+    
+    public void addResetGameListener(ActionListener listener){
+        resetGame.addActionListener(listener);
+    }
 
     public void addReturnToMenuListener(ActionListener listener) {
         returntoMenu.addActionListener(listener);
     }
 
+
+    //Displays the game frame
     public void display() {
+       
         mainFrame.setSize(frameWidth, frameHeight);
         mainFrame.setLocationRelativeTo(null);
-        mainPanel = new JPanel();
-        mainPanel.add(play);
-        mainPanel.add(walk);
-        mainPanel.add(feed);
-        mainPanel.add(water);
-        mainPanel.add(groom);
-        mainPanel.add(sleep);
-        mainPanel.add(saveGame);
-        mainPanel.add(returntoMenu);
+        
+        buttonPanel = new JPanel();
 
+        buttonPanel.add(play);
+        buttonPanel.add(walk);
+        buttonPanel.add(feed);
+        buttonPanel.add(water);
+        buttonPanel.add(groom);
+        buttonPanel.add(sleep);
+        buttonPanel.add(saveGame);
+        buttonPanel.add(resetGame);
+        buttonPanel.add(returntoMenu);
+        buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+        
         petStats();
-        mainPanel.add(statsPanel);
-
-        mainFrame.add(mainPanel);
-
-        mainFrame.add(mainPanel, BorderLayout.PAGE_START);
+ 
         mainFrame.add(statsPanel, BorderLayout.SOUTH);
-
+        mainFrame.add(buttonPanel, BorderLayout.NORTH);
+      
         mainFrame.setVisible(true);
+  
+  
     }
-
+    
+    //Disposes the game frame 
+    public void dispose() {
+        mainFrame.dispose();
+    }
+    
+    //Get methods
     public PetStats getPetStats() {
         return this.stats;
     }
@@ -152,8 +177,6 @@ public class MainView {
         return this.mainFrame;
     }
 
-    public void dispose() {
-        mainFrame.dispose();
-    }
+    
 
 }

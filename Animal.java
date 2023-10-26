@@ -11,8 +11,11 @@ import java.util.logging.Logger;
  *
  * @author alei
  */
+
+//Animal class handles the pet image that moves around the screen depending on the mouse click
 public class Animal extends Thread {
 
+    //Variables
     private int x;
     private int y;
     private int vx;
@@ -20,6 +23,7 @@ public class Animal extends Thread {
     private int destination_x;
     private int destination_y;
 
+    //Default onstructor
     public Animal() {
         x = 0;
         y = 0;
@@ -27,6 +31,7 @@ public class Animal extends Thread {
         vy = 0;
     }
 
+    //Run method 
     public void run() {
         while (true) {
             moveToDestination(destination_x, destination_y);
@@ -42,6 +47,7 @@ public class Animal extends Thread {
         }
     }
 
+    //Move the animal depending on the destination(where the mouse points to)
     private void moveToDestination(int destination_x, int destination_y) {
         if (x < destination_x) {
             vx = 1;
@@ -60,6 +66,8 @@ public class Animal extends Thread {
         }
     }
 
+    //Get and set methods for variables
+    
     public int getX() {
         return x;
     }

@@ -13,12 +13,16 @@ import java.sql.ResultSet;
  *
  * @author alei
  */
+
+//GameDBManager manages any interactions the game needs with the embedded data base
 public class GameDBManager {
 
+    //Variables
     private PetGameDBManager dbManager;
     private Connection conn;
     private Statement statement;
 
+    //Default Constructor
     public GameDBManager() {
         dbManager = new PetGameDBManager();
         conn = dbManager.getConnection();
@@ -30,6 +34,7 @@ public class GameDBManager {
         }
     }
 
+    //Checks if there is a player name in the database that matches the name passed to the function 
     public boolean findExistingPlayer(String playerName) {
         boolean found = false;
 
@@ -49,6 +54,7 @@ public class GameDBManager {
         return found;
     }
 
+    //Checks if there is a pet name in the database that matches the name passed to the function
     public boolean findExistingPet(String petName) {
         boolean found = false;
 
@@ -65,6 +71,7 @@ public class GameDBManager {
         return found;
     }
 
+    //Writes a new player to the database
     public void newPlayer(String playerName) {
         try {
             statement.executeUpdate("INSERT INTO SAVEDGAMES (PLAYER_NAME) VALUES(" + playerName + ")");
@@ -75,6 +82,7 @@ public class GameDBManager {
         }
     }
 
+    //Write a new pet to the database
     public void newPet(String petName) {
         try {
 
@@ -85,6 +93,7 @@ public class GameDBManager {
         }
     }
 
+    //Writes the stats to the database
     public void saveGame(String playerName, String petName, int hunger, int thirst,
             int energy, int hygiene, int happiness, int friendship) {
         try {
@@ -96,6 +105,7 @@ public class GameDBManager {
     }
 
     //Loading saved stats from existing game
+    
     public int loadHunger(String playerName) {
         int hunger = 0;
         try {
@@ -186,6 +196,7 @@ public class GameDBManager {
         return friendship;
     }
 
+    //Return the petName from the database
     public String getExistingPetName(String playerName) {
         String petName = "";
         try {
@@ -203,6 +214,7 @@ public class GameDBManager {
 
     }
 
+    //Close the connection to the database
     public void closeConnections() {
         this.dbManager.closeConnections();
     }

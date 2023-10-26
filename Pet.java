@@ -8,19 +8,30 @@ package gui;
  *
  * @author alei
  */
-public class Pet 
-{
-    
+public class Pet {
+
+    //Variables
     private String petName;
-    
-    public Pet()
-    {
-        
+    private String petType;
+
+    //Default constructor
+    public Pet() {
+
     }
-    
-    public Pet(String petName)
-    {
+
+    //Constructor
+    public Pet(String petName, String petType) {
         this.petName = petName;
+        this.petType = petType;
+    }
+
+    //Get and set methods for variables
+    public String getPetType() {
+        return petType;
+    }
+
+    public void setPetType(String petType) {
+        this.petType = petType;
     }
 
     public String getPetName() {
@@ -30,5 +41,5 @@ public class Pet
     public void setPetName(String petName) {
         this.petName = petName;
     }
-   
+
 }
