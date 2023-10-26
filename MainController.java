@@ -11,12 +11,16 @@ import java.awt.event.ActionListener;
  *
  * @author alei
  */
+
+//MainController class handles the action listener for the buttons in the main view 
 public class MainController implements ActionListener {
 
+    //Variables
     private MainView view;
     private MainModel mainModel;
     private GameModel gameModel = new GameModel();
 
+    //Constructor
     public MainController(MainView view, MainModel mainModel, GameModel gameModel) {
         this.view = view;
         this.mainModel = mainModel;
@@ -29,10 +33,11 @@ public class MainController implements ActionListener {
         view.addWalkListener(this);
         view.addWaterListener(this);
         view.addSaveGameListener(this);
+        view.addResetGameListener(this);
         view.addReturnToMenuListener(this);
-
     }
 
+    //Handles all the different buttons
     @Override
     public void actionPerformed(ActionEvent e) {
         String command = e.getActionCommand();
@@ -66,7 +71,12 @@ public class MainController implements ActionListener {
                 mainModel.saveGame();
                 System.exit(0);
                 break;
+                
+            case "Reset":
+                mainModel.reset();
+                break;
 
+            //Button that allows player to return to menu at any time
             case "Return to menu":
                 view.dispose();
                 gameModel.welcomeFrame();
