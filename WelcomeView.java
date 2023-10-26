@@ -19,8 +19,11 @@ import javax.swing.JPanel;
  *
  * @author alei
  */
+
+//WelcomeView handles the visual aspects of the welcome menu frame
 public class WelcomeView {
 
+    //Screen dimension variables
     private Toolkit kit = Toolkit.getDefaultToolkit();
     private Dimension screenSize = kit.getScreenSize();
     private int screenWidth = screenSize.width;
@@ -28,6 +31,7 @@ public class WelcomeView {
     private int frameWidth = screenWidth;
     private int frameHeight = screenHeight / 2;
 
+    //welcome frame variables
     private JFrame welcomeFrame;
     private JPanel welcomePanel;
     private JButton newGame = new JButton("Play new game");
@@ -35,10 +39,10 @@ public class WelcomeView {
     private JButton explainGame = new JButton("Explain the game");
     private JButton quitGame = new JButton("Quit");
 
+    //returns true if 'existing game' is choosen
     private boolean selectedExisting = false;
-
-    GameDBManager db = new GameDBManager();
-
+    
+    //Default constructor
     public WelcomeView() {
         welcomeFrame = new JFrame("Virtual Pet App");
         welcomeFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -48,6 +52,7 @@ public class WelcomeView {
 
     }
 
+    //Welcome menu adds corresponding buttons to welcome panel and gives it a box layout
     public void welcomeMenu() {
 
         welcomePanel = new JPanel();
@@ -68,7 +73,21 @@ public class WelcomeView {
 
         welcomePanel.setLayout(new BoxLayout(welcomePanel, BoxLayout.Y_AXIS));
     }
+    
+    //Adds the welcome panel to the welcome frame to be displayed
+    public void display() {
+        welcomeMenu();
+        welcomeFrame.add(welcomePanel);
 
+        welcomeFrame.setVisible(true);
+    }
+
+    //Dispose the welcome frame
+    public void dispose() {
+        welcomeFrame.dispose();
+    }
+
+    //Adding action listeners to the buttons 
     public void addNewGameListener(ActionListener listener) {
         newGame.addActionListener(listener);
     }
@@ -85,17 +104,7 @@ public class WelcomeView {
         quitGame.addActionListener(listener);
     }
 
-    public void display() {
-        welcomeMenu();
-        welcomeFrame.add(welcomePanel);
-
-        welcomeFrame.setVisible(true);
-    }
-
-    public void dispose() {
-        welcomeFrame.dispose();
-    }
-
+    //Get and set method for existing game 
     public void setExistingGame(boolean value) {
         selectedExisting = value;
     }
